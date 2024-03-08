@@ -50,18 +50,18 @@ def bot():
         sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
         
         # Processa a mensagem na API da IA
-        chave_api = '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'
+        chave_api = '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'
         editacodigo = 'sm0WzC0H4aa1zgZyKGNb0jbV8LFrFBgN'
         resposta = requests.get("https://editacodigo.com.br/gpt/index.php",params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
-        time.sleep(5)
+        time.sleep(1)
         resposta = resposta.text
 
         # Responde a mensagem 
         campo_de_texto = driver.find_element(By.XPATH,caixa_msg)
         campo_de_texto.click()
-        time.sleep(2)
+        time.sleep(1)
         campo_de_texto.send_keys(resposta,Keys.ENTER)
-        time.sleep(2)
+        time.sleep(1)
         
         # Fecha o contato
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
