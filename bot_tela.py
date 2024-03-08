@@ -21,47 +21,65 @@ token3 = api[2].strip()
 bolinha_notificacao = api[3].strip()
 contato_cliente = api[4].strip()
 caixa_msg = api[5].strip()
-msg_cliente = api[6].strip()	
+msg_cliente = api[6].strip()    
 # ----------------------------------------------------------------------------------------- BOT ----------------------------------------------------------------------------------------------------------#
-def bot():  
-    try:
-        # Pegar a notificação e abrir ela
-        bolinha = driver.find_element(By.CLASS_NAME,bolinha_notificacao)
-        bolinha = driver.find_elements(By.CLASS_NAME,bolinha_notificacao)
-        clica_bolinha = bolinha[-1]
-        acao_bolinha = webdriver.common.action_chains.ActionChains(driver)
-        acao_bolinha.move_to_element_with_offset(clica_bolinha,0,-20)
-        acao_bolinha.click()
-        acao_bolinha.perform()
-        acao_bolinha.click()
-        acao_bolinha.perform()
-        print('Buscando novas notificações...')
-        
-        # Pegar a mensagem que chegou
-        todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_cliente)
-        todas_as_msg_texto = [e.text for e in todas_as_msg]
-        msg = todas_as_msg_texto[-1]
-        print()
-        
-        # Customizando a IA
-        sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
-        
-        # Processa a mensagem na API da IA
-        chave_api = apiopenai.strip()
-        editacodigo = 'sm0WzC0H4aa1zgZyKGNb0jbV8LFrFBgN'
-        resposta = requests.get("https://editacodigo.com.br/gpt/index.php",params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
-        time.sleep(1)
-        resposta = resposta.text
+mensagem_enviada = False  # Adiciona uma variável de controle
 
-        # Responde a mensagem 
-        campo_de_texto = driver.find_element(By.XPATH,caixa_msg)
-        campo_de_texto.click()
-        time.sleep(1)
-        campo_de_texto.send_keys(resposta,Keys.ENTER)
-        time.sleep(1)
-        
-        # Fecha o contato
-        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+def bot():
+    global mensagem_enviada  
+    try:
+        if not mensagem_enviada:
+            # Pegar a notificação e abrir ela
+            bolinha = driver.find_element(By.CLASS_NAME,bolinha_notificacao)
+            bolinha = driver.find_elements(By.CLASS_NAME,bolinha_notificacao)
+            clica_bolinha = bolinha[-1]
+            acao_bolinha = webdriver.common.action_chains.ActionChains(driver)
+            acao_bolinha.move_to_element_with_offset(clica_bolinha,0,-20)
+            acao_bolinha.click()
+            acao_bolinha.perform()
+            acao_bolinha.click()
+            acao_bolinha.perform()
+            print('Buscando novas notificações...')
+            
+            # Pegar a mensagem que chegou
+            todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_cliente)
+            todas_as_msg_texto = [e.text for e in todas_as_msg]
+            msg = todas_as_msg_texto[-1]
+            print()
+            
+            # Customizando a IA
+            sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
+            
+            # Processa a mensagem na API da IA
+            chave_api = apiopenai.strip()
+            editacodigo = 'sm0WzC0H4aa1zgZyKGNb0jbV8LFrFBgN'
+            resposta = requests.get("https://editacodigo.com.br/gpt/index.php",params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
+            time.sleep(1)
+            resposta = resposta.text
+
+            # Responde a mensagem 
+            campo_de_texto = driver.find_element(By.XPATH,caixa_msg)
+            campo_de_texto.click()
+            time.sleep(1)
+            # Limpar o campo de texto
+            for i in range(len(campo_de_texto.text)):
+                campo_de_texto.send_keys(Keys.BACKSPACE)
+
+            # Enviar a resposta
+            campo_de_texto.send_keys(resposta, Keys.ENTER)
+            time.sleep(10)
+            
+            for char in resposta:
+                campo_de_texto.send_keys(char)
+                time.sleep(0.1)  # Pausa para simular a digitação
+                
+            # Pressiona ENTER quando a mensagem estiver completa
+            campo_de_texto.send_keys(Keys.ENTER)
+            time.sleep(5)  # Tempo de espera após o envio
+
+            # Fecha o contato
+            webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+            mensagem_enviada = True
         
     except:
         print('buscando novas notificações')
