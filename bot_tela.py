@@ -101,10 +101,10 @@ while True:
         senha = values['senha']
         if senha == token1:
             windows1.close()
-            event2, values = windows2.read()
+            event2, value2 = windows2.read()
             if event2 == 'Capturar QRCode':
-                apiopenai = values['apiopenai']
-                texto = values['texto']
+                apiopenai = value2['apiopenai']
+                texto = value2['texto']
                 windows2.close()
                  # Abrir o navegador adaptado para automação
                 dir_path = os.getcwd()
