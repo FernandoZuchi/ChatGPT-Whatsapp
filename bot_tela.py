@@ -48,7 +48,7 @@ def bot():
             print()
             
             # Customizando a IA
-            sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
+            sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack.VOCÊ DEVE ELABORAR A RESPOSTA EM APENAS UMA MENSAGEM GRANDE, NÃO ENVIE VÁRIAS MENSAGENS AO USUÁRIO, QUEBRE AS LINHAS MANTENDO-SE NA MESMA MENSAGEM. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
             
             # Processa a mensagem na API da IA
             chave_api = apiopenai.strip()
@@ -60,13 +60,8 @@ def bot():
             # Responde a mensagem 
             campo_de_texto = driver.find_element(By.XPATH,caixa_msg)
             campo_de_texto.click()
-            time.sleep(1)
-            # Limpar o campo de texto
-            for i in range(len(campo_de_texto.text)):
-                campo_de_texto.send_keys(Keys.BACKSPACE)
-
-            # Enviar a resposta
-            campo_de_texto.send_keys(resposta, Keys.ENTER)
+            time.sleep(10)
+            campo_de_texto.send_keys(resposta,Keys.ENTER)
             time.sleep(10)
             
             for char in resposta:
@@ -98,6 +93,7 @@ tela2 = [
     [sg.Text('Interface do Chatbot com inteligência artificial')],
     [sg.Text('Insira a API da Openai')],
     [sg.Input(key='apiopenai')],
+    [sg.Text('INSIRA AS INSTRUÇÕES PARA SUA I.A')],
     [sg.Multiline(size=(80,20),key='texto')],
     [sg.Text('Tenha o celular em mãos')],
     [sg.Text('Clique abaixo para capturar o QRCode')],

@@ -47,10 +47,10 @@ def bot():
         print()
         
         # Customizando a IA
-        sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
+        sistema = 'DE FORMA ALGUMA É PERMITIDO QUEBRAR A LINHA, MESMO QUANDO NECESSÁRIO Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack.Envie a mensagem sem quebra de linhas. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy LEMBRANDO, ENVIE APENAS UMA MENSAGEM, EVITE A TODO CUSTO A QUEBRA DE LINHA, FAÇA SUA RESPOSTA SEM QUEBRAR LINHAS, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos. DE FORMA ALGUMA É PERMITIDO QUEBRAR A LINHA, MESMO QUANDO NECESSÁRIO'
         
         # Processa a mensagem na API da IA
-        chave_api = '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'
+        chave_api = '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'
         editacodigo = 'sm0WzC0H4aa1zgZyKGNb0jbV8LFrFBgN'
         resposta = requests.get("https://editacodigo.com.br/gpt/index.php",params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
         time.sleep(1)
@@ -59,9 +59,14 @@ def bot():
         # Responde a mensagem 
         campo_de_texto = driver.find_element(By.XPATH,caixa_msg)
         campo_de_texto.click()
-        time.sleep(1)
-        campo_de_texto.send_keys(resposta,Keys.ENTER)
-        time.sleep(1)
+        time.sleep(10)
+        campo_de_texto.send_keys(resposta)
+
+        while True:
+            time.sleep(1)
+            if campo_de_texto == resposta:
+                campo_de_texto.send_keys(Keys.ENTER)
+                break
         
         # Fecha o contato
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
