@@ -77,9 +77,10 @@ tela1 = [
 ]
 
 tela2 = [
-    [sg.Text('Interface do Chatbot com inteligência artificial')],
-    [sg.Text('Insira a API da Openai')],
+    [sg.Text('Interface do Chatbot com inteligência artificial:')],
+    [sg.Text('Insira a API da Openai:')],
     [sg.Input(key='apiopenai')],
+    [sg.Text('Insira as instruções para o seu robô')],
     [sg.Multiline(size=(80,20),key='texto')],
     [sg.Text('Tenha o celular em mãos')],
     [sg.Text('Clique abaixo para capturar o QRCode')],
