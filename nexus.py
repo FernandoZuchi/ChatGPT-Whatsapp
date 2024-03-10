@@ -47,10 +47,10 @@ def bot():
         print()
         
         # Customizando a IA
-        sistema = 'Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos'
+        sistema = 'DE FORMA ALGUMA QUEBRE LINHA, MESMO QUANDO NECESSÁRIO, NÃO QUEBRE LINHA! Você é o Nexus, a inteligência artificial da Codi Academy, você é um professor excelente de programação FullStack. Seu objetivo é auxiliar no aprendizado dos alunos da Codi Academy, responder perguntas voltadas a programação, auiliar em projetos, fornecer informações e códigos. DE FORMA ALGUMA QUEBRE LINHA, MESMO QUANDO NECESSÁRIO, NÃO QUEBRE LINHA!'
         
         # Processa a mensagem na API da IA
-        chave_api = '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'
+        chave_api = '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'
         editacodigo = 'sm0WzC0H4aa1zgZyKGNb0jbV8LFrFBgN'
         resposta = requests.get("https://editacodigo.com.br/gpt/index.php",params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
         time.sleep(1)
